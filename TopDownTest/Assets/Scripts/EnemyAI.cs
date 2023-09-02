@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour
     [Inject] private PlayerController playerController;
     
     public NavMeshAgent agent;
+    public Animator animator;
 
     public Transform player;
 
@@ -58,6 +59,7 @@ public class EnemyAI : MonoBehaviour
 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
+        animator.SetBool("isRunning", true);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         
@@ -84,18 +86,20 @@ public class EnemyAI : MonoBehaviour
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
+        animator.SetBool("isRunning", true);
     }
     private void AttackPlayer()
     {
         //Make sure enemy doesnt move
         agent.SetDestination(transform.position);
+        animator.SetBool("isRunning", false);
+        
         
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            print("Attack");
-            
+            animator.SetBool("isShooting", true);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -103,6 +107,7 @@ public class EnemyAI : MonoBehaviour
 
     private void ResetAttack()
     {
+        animator.SetBool("isShooting", false);
         alreadyAttacked = false;
     }
 }
