@@ -5,16 +5,19 @@ TagManager:
   serializedVersion: 2
   tags:
   - coin
+  - bullet
+  - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - bullet
   - Water
   - UI
   - Player
   - Ground
-  - 
+  - Enemy
   - 
   - 
   - 

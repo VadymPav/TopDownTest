@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -14,16 +16,64 @@ public class GameManager : MonoBehaviour
     
     private int enemyNumber;
     private int coinNumber;
+    private int currentCoin;
     public GameObject enemyPrefab;
     public GameObject coinPrefab;
+
+    public GameObject GameWinWindow;
+    public GameObject GameLostWindow;
+    public GameObject GamePauseWindow;
+    
+    public TextMeshProUGUI text;
     public float range = 100f;
     private void Start()
     {
+        Time.timeScale = 1;
         enemyNumber = config.NumberOfEnemies;
         coinNumber = config.NumberOfCoins;
+        GameWinWindow.SetActive(false);
+        GameLostWindow.SetActive(false);
+        GamePauseWindow.SetActive(false);
         SpawnEnemy();
         SpawnCoin();
     }
+
+    private void Update()
+    {
+        if (currentCoin == config.NumberOfCoins)
+        {
+            GameWin();
+        }
+    }
+
+    private void UpdateText()
+    {
+        text.text = currentCoin.ToString() + "/" + config.NumberOfCoins;
+    }
+
+     void GameWin()
+     {
+         Time.timeScale = 0;
+         GameWinWindow.SetActive(true);
+         
+     }
+     public void GameLost()
+     {
+         Time.timeScale = 0;
+         GameLostWindow.SetActive(true);
+     }
+
+     public void GamePaused()
+     {
+         Time.timeScale = 0;
+         GamePauseWindow.SetActive(true);
+     }
+
+     public void IncreaseCoins()
+     {
+         currentCoin += 1;
+         UpdateText();
+     }
 
 
     public void SpawnCoin()
@@ -65,5 +115,16 @@ public class GameManager : MonoBehaviour
         }
         result = Vector3.zero;
         return false;
+    }
+
+    public void MenuButton()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+    public void PlayButton()
+    {
+        Time.timeScale = 1;
+        GamePauseWindow.SetActive(false);
     }
 }

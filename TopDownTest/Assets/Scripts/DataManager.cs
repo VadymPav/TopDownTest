@@ -13,6 +13,7 @@ public class DataManager : ScriptableObject
     public float EnemyAttackSpeed;
     public float EnemyAttackRange;
     public float EnemySightRange;
+    public int Damage;
     [Header("Level")]
     public int NumberOfEnemies;
     public int NumberOfCoins;

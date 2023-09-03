@@ -14,6 +14,7 @@ public class PickUp : MonoBehaviour
         if (collision.gameObject.CompareTag("coin"))
         {
             Destroy(collision.gameObject);
+            gameManager.IncreaseCoins();
             gameManager.SpawnCoin();
         }
     }

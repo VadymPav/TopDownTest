@@ -11,11 +11,14 @@ public class EnemyAI : MonoBehaviour
 {
     [Inject] private DataManager config;
     [Inject] private PlayerController playerController;
-    
+
     public NavMeshAgent agent;
     public Animator animator;
 
     public Transform player;
+    public Transform shootPoint;
+
+    public GameObject bulletPrefab;
 
     public LayerMask whatIsGround, whatIsPlayer;
     
@@ -50,7 +53,7 @@ public class EnemyAI : MonoBehaviour
         
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
+        if (playerInAttackRange) AttackPlayer();
     }
 
     private void Patroling()
@@ -100,14 +103,22 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
             animator.SetBool("isShooting", true);
+            Shoot();
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
 
+    void Shoot()
+    {
+        Vector3 bulletDirection = player.position - shootPoint.position;
+        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        bullet.GetComponent<Rigidbody>().AddForce(bulletDirection.normalized*config.BulletSpeed, ForceMode.Impulse);
+        animator.SetBool("isShooting", false);
+
+    }
     private void ResetAttack()
     {
-        animator.SetBool("isShooting", false);
         alreadyAttacked = false;
     }
 }

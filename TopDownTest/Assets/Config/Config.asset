@@ -15,9 +15,10 @@ MonoBehaviour:
   Health: 100
   PlayerSpeed: 7
   EnemySpeed: 3
-  BulletSpeed: 10
-  EnemyAttackSpeed: 1
-  EnemyAttackRange: 6
-  EnemySightRange: 10
-  NumberOfEnemies: 5
+  BulletSpeed: 20
+  EnemyAttackSpeed: 3
+  EnemyAttackRange: 10
+  EnemySightRange: 15
+  Damage: 15
+  NumberOfEnemies: 3
   NumberOfCoins: 5
