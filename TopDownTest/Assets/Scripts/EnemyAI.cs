@@ -12,6 +12,8 @@ public class EnemyAI : MonoBehaviour
     [Inject] private DataManager config;
     [Inject] private PlayerController playerController;
 
+    public AudioSource source;
+    public AudioClip clip;
     public NavMeshAgent agent;
     public Animator animator;
 
@@ -116,6 +118,7 @@ public class EnemyAI : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(bulletDirection.normalized*config.BulletSpeed, ForceMode.Impulse);
         animator.SetBool("isShooting", false);
 
+        source.PlayOneShot(clip);
     }
     private void ResetAttack()
     {
